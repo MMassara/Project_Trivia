@@ -17,7 +17,7 @@ export default class Login extends Component {
     const isDisabled = !(email.length > 0 && name.length > 0);
     this.setState({ isDisabled });
   };
-  // teste
+  
   render() {
     const { isDisabled } = this.state;
     return (

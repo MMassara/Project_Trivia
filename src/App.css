@@ -28,7 +28,7 @@ body {
   }
 }
 
-.App-header {
+/* .App-header {
   align-items: center;
   background-color: #282c34;
   color: white;
@@ -37,7 +37,7 @@ body {
   font-size: calc(10px + 2vmin);
   justify-content: center;
   min-height: 100vh;
-}
+} */
 
 .App-link {
   color: #61dafb;

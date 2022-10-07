@@ -1,8 +1,12 @@
 //  teste
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { addName } from '../redux/actions/index';
 import PropTypes from 'prop-types';
 
-export default class Login extends Component {
+
+class Login extends Component {
   state = {
     name: '',
     email: '',
@@ -12,6 +16,13 @@ export default class Login extends Component {
   handleChange = ({ target }) => {
     const { name, value } = target;
     this.setState({ [name]: value }, () => this.validatingButton());
+  };
+
+  sucessLogin = () => {
+    const { history, dispatch } = this.props;
+    const { name } = this.state;
+    history.push('/game');
+    dispatch(addName(name));
   };
 
   validatingButton = () => {
@@ -44,7 +55,7 @@ export default class Login extends Component {
         <button
           type="button"
           data-testid="btn-play"
-          onClick={ this.validatingButton }
+          onClick={ this.sucessLogin }
           disabled={ isDisabled }
         >
           Play
@@ -63,4 +74,8 @@ export default class Login extends Component {
 
 Login.propTypes = {
   history: PropTypes.objectOf(PropTypes.string).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
+
+export default connect()(Login);
+

@@ -1,7 +1,10 @@
+//  teste
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addName } from '../redux/actions/index';
+import PropTypes from 'prop-types';
+
 
 class Login extends Component {
   state = {
@@ -28,6 +31,11 @@ class Login extends Component {
     this.setState({ isDisabled });
   };
 
+  settings = () => {
+    const { history: { push } } = this.props;
+    push('/configuracoes');
+  };
+
   render() {
     const { isDisabled } = this.state;
     return (
@@ -52,6 +60,13 @@ class Login extends Component {
         >
           Play
         </button>
+        <button
+          type="button"
+          data-testid="btn-settings"
+          onClick={ this.settings }
+        >
+          Configurações
+        </button>
       </div>
     );
   }
@@ -63,3 +78,4 @@ Login.propTypes = {
 };
 
 export default connect()(Login);
+

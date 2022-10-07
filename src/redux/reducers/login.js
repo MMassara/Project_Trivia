@@ -6,6 +6,7 @@ const INITIAL_STATE = {
 
 function login(state = INITIAL_STATE, action) {
   switch (action.type) {
+  // teste
   case ADD_NAME:
     return {
       ...state,

@@ -1,10 +1,12 @@
-//  teste
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import { connect } from 'react-redux';
 import { addName } from '../redux/actions/index';
 /* import { userLoginAction } from '../redux/actions'; */
 import tokenAPI from '../services/tokenAPI';
+
+import { addName, addEmail } from '../redux/actions/index';
 
 class Login extends Component {
   state = {
@@ -18,6 +20,15 @@ class Login extends Component {
     this.setState({ [name]: value }, () => this.validatingButton());
   };
 
+
+  sucessLogin = () => {
+    const { history, dispatch } = this.props;
+    const { name, email } = this.state;
+    history.push('/game');
+    dispatch(addName(name));
+    dispatch(addEmail(email));
+  };
+  
   validatingButton = () => {
     const { name, email } = this.state;
     const isDisabled = !(email.length > 0 && name.length > 0);
@@ -35,7 +46,7 @@ class Login extends Component {
 
   settings = () => {
     const { history: { push } } = this.props;
-    push('/configuracoes');
+    push('/config');
   };
 
   render() {

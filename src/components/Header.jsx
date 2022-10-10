@@ -20,7 +20,7 @@ class Header extends Component {
 
   render() {
     const { name } = this.props;
-    const { userImage } = this.state
+    const { userImage } = this.state;
     return (
       <div>
         <img data-testid="header-profile-picture" alt="userImage" src={userImage}/>

@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Game from './pages/Game';
 import Login from './pages/Login';
 
-export default class Routes extends Component {
+class Routes extends Component {
   render() {
     return (
       <Switch>
@@ -13,3 +13,5 @@ export default class Routes extends Component {
     );
   }
 }
+
+export default Routes;

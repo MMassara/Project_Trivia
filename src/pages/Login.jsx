@@ -21,7 +21,6 @@ class Login extends Component {
     const isDisabled = !(email.length > 0 && name.length > 0);
     this.setState({ isDisabled });
   };
-<<<<<<< HEAD
 
   submitPlayBtn = async () => {
     const token = await tokenAPI();
@@ -30,9 +29,6 @@ class Login extends Component {
     history.push('/game');
   };
 
-=======
-  
->>>>>>> 9b6f986827bcc1e44a20cc41b495ff958a7e7720
   render() {
     const { name, email, isDisabled } = this.state;
     return (

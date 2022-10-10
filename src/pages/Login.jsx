@@ -1,6 +1,8 @@
+//  teste
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { addName } from '../redux/actions/index';
 /* import { userLoginAction } from '../redux/actions'; */
 import tokenAPI from '../services/tokenAPI';
 
@@ -25,8 +27,15 @@ class Login extends Component {
   submitPlayBtn = async () => {
     const token = await tokenAPI();
     localStorage.setItem('token', token.token);
-    const { history } = this.props;
+    const { history, dispatch } = this.props;
+    const { name } = this.state;
     history.push('/game');
+    dispatch(addName(name));
+  };
+
+  settings = () => {
+    const { history: { push } } = this.props;
+    push('/configuracoes');
   };
 
   render() {
@@ -54,6 +63,13 @@ class Login extends Component {
           disabled={ isDisabled }
         >
           Play
+        </button>
+        <button
+          type="button"
+          data-testid="btn-settings"
+          onClick={ this.settings }
+        >
+          Configurações
         </button>
       </div>
     );

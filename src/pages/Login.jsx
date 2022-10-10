@@ -1,10 +1,7 @@
-//  teste
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addName } from '../redux/actions/index';
-import PropTypes from 'prop-types';
-
+import { addName, addEmail } from '../redux/actions/index';
 
 class Login extends Component {
   state = {
@@ -20,9 +17,10 @@ class Login extends Component {
 
   sucessLogin = () => {
     const { history, dispatch } = this.props;
-    const { name } = this.state;
+    const { name, email } = this.state;
     history.push('/game');
     dispatch(addName(name));
+    dispatch(addEmail(email))
   };
 
   validatingButton = () => {
@@ -33,7 +31,7 @@ class Login extends Component {
 
   settings = () => {
     const { history: { push } } = this.props;
-    push('/configuracoes');
+    push('/config');
   };
 
   render() {

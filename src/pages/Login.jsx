@@ -20,7 +20,7 @@ class Login extends Component {
     const { name, email } = this.state;
     history.push('/game');
     dispatch(addName(name));
-    dispatch(addEmail(email))
+    dispatch(addEmail(email));
   };
 
   validatingButton = () => {
@@ -76,4 +76,3 @@ Login.propTypes = {
 };
 
 export default connect()(Login);
-

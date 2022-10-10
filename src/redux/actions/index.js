@@ -7,6 +7,6 @@ export const addName = (name) => ({
 });
 
 export const addEmail = (email) => ({
-  type: ADD_EMAIL, 
-  email
-})
+  type: ADD_EMAIL,
+  email,
+});

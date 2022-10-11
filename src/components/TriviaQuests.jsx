@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
+const correctAnswer = 'correct-answer';
 
 class TriviaQuests extends Component {
   state = {
@@ -16,18 +17,18 @@ class TriviaQuests extends Component {
   }
 
   createAnswers = () => {
-    const {arrayResults, arrayIndex} = this.state;
+    const { arrayResults, arrayIndex } = this.state;
     const results = arrayResults[arrayIndex].incorrect_answers.map((element, index) => {
       const incorrectAnswers = {
         name: element,
         testid: `wrong-answer-${index}`,
-        isRight: false
+        isRight: false,
       };
       return incorrectAnswers;
     });
     const correct = {
       name: arrayResults[arrayIndex].correct_answer,
-      testid: 'correct-answer',
+      testid: correctAnswer,
     };
     const answerss = [...results, correct];
     const MULTIPLE = 0.5;
@@ -35,7 +36,7 @@ class TriviaQuests extends Component {
     this.setState({
       answers: shuffle,
     });
-  }
+  };
 
   fetchApi = async () => {
     const token = localStorage.getItem('token');
@@ -49,24 +50,25 @@ class TriviaQuests extends Component {
       this.setState({
         invalidToken: true,
       });
-    } 
-    this.setState({
-      arrayResults: response.results, 
-    }, () => this.createAnswers());
+    } else {
+      this.setState({
+        arrayResults: response.results,
+      }, () => this.createAnswers());
+    }
   };
 
   handleClick = () => {
     this.setState((prevState) => ({
       arrayIndex: prevState.arrayIndex + 1,
-      showResults:false
+      showResults: false,
     }), () => this.createAnswers());
   };
 
   showResponses = () => {
     this.setState({
       showResults: true,
-    })
-  }
+    });
+  };
 
   render() {
     const { arrayResults, arrayIndex, answers, invalidToken, showResults } = this.state;
@@ -93,8 +95,15 @@ class TriviaQuests extends Component {
                         key={ question.name }
                         type="button"
                         data-testid={ question.testid }
-                        onClick={this.showResponses}
-                        className={question.testid === 'correct-answer' && showResults === true ? 'green-border' : null || question.isRight === false && showResults === true ? 'red-border' : null }
+                        onClick={ this.showResponses }
+                        className={ (question.testid === correctAnswer
+                        && showResults === true
+                          ? 'green-border'
+                          : null)
+                        || (question.isRight === false
+                        && showResults === true
+                          ? 'red-border'
+                          : null) }
                       >
                         {question.name}
                       </button>
@@ -104,8 +113,14 @@ class TriviaQuests extends Component {
                         key={ question.name }
                         type="button"
                         data-testid={ question.testid }
-                        onClick={this.showResponses}
-                        className={question.testid === 'correct-answer' && showResults === true ? 'green-border' : null || question.isRight === false && showResults === true ? 'red-border' : null }
+                        onClick={ this.showResponses }
+                        className={ (question.testid === correctAnswer
+                        && showResults === true
+                          ? 'green-border' : null)
+                        || (question.isRight === false
+                        && showResults === true
+                          ? 'red-border'
+                          : null) }
                       >
                         {question.name}
                       </button>

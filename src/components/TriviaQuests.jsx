@@ -9,11 +9,13 @@ class TriviaQuests extends Component {
     arrayIndex: 0,
     answers: [],
     invalidToken: false,
+    isDisable: false,
     showResults: false,
   };
 
   componentDidMount() {
     this.fetchApi();
+    this.handleTime();
   }
 
   createAnswers = () => {
@@ -70,8 +72,30 @@ class TriviaQuests extends Component {
     });
   };
 
+  handleTime = () => {
+    this.setState({ seconds: 30 }, () => {
+      const NUMBER = 1000;
+      const interval = setInterval(() => {
+        this.setState((prevState) => ({
+          isDisable: false,
+          seconds: prevState.seconds - 1,
+        }), () => {
+          const { seconds } = this.state;
+          if (seconds === 0) {
+            clearInterval(interval);
+            this.setState({
+              isDisable: true,
+            });
+          }
+        });
+      }, NUMBER);
+    });
+  };
+
   render() {
-    const { arrayResults, arrayIndex, answers, invalidToken, showResults } = this.state;
+    const { arrayResults, arrayIndex, answers,
+      invalidToken, showResults,
+      seconds, isDisable } = this.state;
 
     return (
       <div>
@@ -94,6 +118,7 @@ class TriviaQuests extends Component {
                       <button
                         key={ question.name }
                         type="button"
+                        disabled={ isDisable }
                         data-testid={ question.testid }
                         onClick={ this.showResponses }
                         className={ (question.testid === correctAnswer
@@ -112,6 +137,7 @@ class TriviaQuests extends Component {
                       <button
                         key={ question.name }
                         type="button"
+                        disabled={ isDisable }
                         data-testid={ question.testid }
                         onClick={ this.showResponses }
                         className={ (question.testid === correctAnswer
@@ -126,6 +152,11 @@ class TriviaQuests extends Component {
                       </button>
                     )
                 ))}
+              </div>
+              <div>
+                <h1>
+                  { seconds }
+                </h1>
               </div>
             </div>
             <button

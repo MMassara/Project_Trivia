@@ -1,4 +1,4 @@
-import { ADD_NAME, SHOW_POINTS, SET_URL_GRAVATAR } from '../actions/index';
+import { ADD_NAME, SHOW_POINTS, SET_URL_GRAVATAR, SHOW_RIGHT } from '../actions/index';
 
 const INITIAL_STATE = {
   name: '',
@@ -23,6 +23,11 @@ function player(state = INITIAL_STATE, action) {
     return {
       ...state,
       gravatarEmail: action.url,
+    };
+  case SHOW_RIGHT:
+    return {
+      ...state,
+      assertions: action.rights,
     };
   default:
     return state;

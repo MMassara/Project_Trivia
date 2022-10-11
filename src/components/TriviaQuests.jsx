@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { showPoints } from '../redux/actions';
 import PropTypes from 'prop-types';
+import { showPoints, showRight } from '../redux/actions';
 
 const correctAnswer = 'correct-answer';
 const ten = 10;
@@ -17,6 +17,7 @@ class TriviaQuests extends Component {
     isDisable: false,
     showResults: false,
     score: 0,
+    rightAnswers: 0,
   };
 
   componentDidMount() {
@@ -26,8 +27,9 @@ class TriviaQuests extends Component {
 
   componentDidUpdate() {
     const { dispatch } = this.props;
-    const { score } = this.state;
+    const { score, rightAnswers } = this.state;
     dispatch(showPoints(score));
+    dispatch(showRight(rightAnswers));
   }
 
   showResponses = () => {
@@ -70,14 +72,17 @@ class TriviaQuests extends Component {
       if (dificulty === 'hard') {
         this.setState((prevState) => ({
           score: prevState.score + (ten + (timer * hard)),
+          rightAnswers: prevState.rightAnswers + 1,
         }));
       } else if (dificulty === 'medium') {
         this.setState((prevState) => ({
           score: prevState.score + (ten + (timer * 2)),
+          rightAnswers: prevState.rightAnswers + 1,
         }));
       } else if (dificulty === 'easy') {
         this.setState((prevState) => ({
           score: prevState.score + (ten + (timer * 1)),
+          rightAnswers: prevState.rightAnswers + 1,
         }));
       }
     }

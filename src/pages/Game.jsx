@@ -6,8 +6,8 @@ export default class Game extends Component {
   render() {
     return (
       <>
-      <Header/>
-      <TriviaQuests/>
+        <Header />
+        <TriviaQuests />
       </>
     );
   }

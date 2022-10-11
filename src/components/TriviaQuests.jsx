@@ -1,37 +1,54 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+// import PropTypes from 'prop-types';
 
 class TriviaQuests extends Component {
   state = {
     arrayResults: [],
     arrayIndex: 0,
+    answers: '',
+    invalidToken: false,
   };
 
   componentDidMount() {
-   this.fetchApi();
+    this.fetchApi();
   }
 
   fetchApi = async () => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     const request = await fetch(
-      `https://opentdb.com/api.php?amount=5&token=${token}`
+      `https://opentdb.com/api.php?amount=5&token=${token}`,
     );
     const response = await request.json();
     const magicNumber = 3;
-    const { history } = this.props;
-    if (response.response_code === magicNumber) {
-      localStorage.removeItem("token");
-      history.push("/");
+    console.log(response);
+    if (!response.results.length && response.response_code === magicNumber) {
+      localStorage.setItem('token', '');
+      this.setState({
+        invalidToken: true,
+      });
     } else {
-      const results = response.results.map((element) => ({
-        ...element,
-        shuffledQuestions: this.shuffle([
-          ...element.incorrect_answers,
-          element.correct_answer,
-        ]),
-      }));
-      this.setState({ arrayResults: results });
+      const results = response.results[0].incorrect_answers.map((element, index) => {
+        const incorrectAnswers = {
+          name: element,
+          testid: `wrong-answer-${index}`,
+        };
+        return incorrectAnswers;
+      });
+      const correct = {
+        name: response.results[0].correct_answer,
+        testid: 'correct-answer',
+      };
+      const answerss = [...results, correct];
+      const MULTIPLE = 0.5;
+      const shuffle = answerss.sort(() => Math.random() - MULTIPLE);
+      this.setState({
+        answers: shuffle,
+      });
     }
+    this.setState({
+      arrayResults: response.results,
+    });
   };
 
   handleClick = () => {
@@ -40,63 +57,64 @@ class TriviaQuests extends Component {
     }));
   };
 
-  shuffle = (array) => {
-    let currentIndex = array.length,
-      randomIndex;
-
-    while (currentIndex != 0) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex],
-        array[currentIndex],
-      ];
-    }
-
-    return array;
-  };
-
   render() {
-    const { arrayResults, arrayIndex } = this.state;
+    const { arrayResults, arrayIndex, answers, invalidToken } = this.state;
 
     return (
       <div>
-        {arrayResults.length > 0 ? (
-          <div>
-            <h4 data-testid="question-category">
-              {arrayResults[arrayIndex].category}
-            </h4>
-            <h4 data-testid="question-text">
-              {arrayResults[arrayIndex].question}
-            </h4>
-          </div>
-        ) : null}
-        {arrayResults.length > 0 ? (
-          arrayResults[arrayIndex].type === "boolean" ? (
+        { invalidToken && <Redirect to="/" /> }
+        {arrayResults.length > 0 && (
+          <>
             <div>
-              <button>True</button> <button>False</button>
+              <h4 data-testid="question-category">
+                {arrayResults[arrayIndex].category}
+              </h4>
+              <h4 data-testid="question-text">
+                {arrayResults[arrayIndex].question}
+              </h4>
             </div>
-          ) : (
             <div>
-              {arrayResults[arrayIndex].shuffledQuestions.map((element) => (<div data-testid='answer-options'>
-                <button>{element}</button>
-                </div>
-              ))}
+              <div data-testid="answer-options">
+                {answers.map((question) => (
+                  question.name === arrayResults[arrayIndex].correct_answer
+                    ? (
+                      <button
+                        key={ question.name }
+                        type="button"
+                        data-testid={ question.testid }
+                      >
+                        {question.name}
+                      </button>
+                    )
+                    : (
+                      <button
+                        key={ question.name }
+                        type="button"
+                        data-testid={ question.testid }
+                      >
+                        {question.name}
+                      </button>
+                    )
+                ))}
+              </div>
             </div>
-          )
-        ) : null}
-        <button type="button" onClick={this.handleClick}>
-          Next Question
-        </button>
+            <button
+              type="button"
+              onClick={ this.handleClick }
+            >
+              Next Question
+            </button>
+
+          </>
+        ) }
       </div>
     );
   }
 }
-// test
-TriviaQuests.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-};
+
+// TriviaQuests.propTypes = {
+//   history: PropTypes.shape({
+//     push: PropTypes.func.isRequired,
+//   }).isRequired,
+// };
 export default TriviaQuests;

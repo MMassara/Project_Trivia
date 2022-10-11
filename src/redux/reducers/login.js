@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   points: 0,
 };
 
-function login(state = INITIAL_STATE, action) {
+const login = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case ADD_NAME:
     return {
@@ -21,11 +21,11 @@ function login(state = INITIAL_STATE, action) {
   case SHOW_POINTS:
     return {
       ...state,
-      points: action.point
-    }
+      points: action.points,
+    };
   default:
     return state;
   }
-}
+};
 
 export default login;

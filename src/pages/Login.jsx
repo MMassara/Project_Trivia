@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import { connect } from 'react-redux';
-import tokenAPI from '../services/tokenAPI';
-
 import { addName, addEmail } from '../redux/actions/index';
 
 class Login extends Component {
@@ -13,30 +10,39 @@ class Login extends Component {
     isDisabled: true,
   };
 
+  componentDidMount() {
+    this.submitPlayBtn();
+  }
+
   handleChange = ({ target }) => {
     const { name, value } = target;
     this.setState({ [name]: value }, () => this.validatingButton());
   };
 
-
   sucessLogin = () => {
-    const { history, dispatch } = this.props;
+    this.submitPlayBtn();
+    const { history, addNames, addEmails } = this.props;
     const { name, email } = this.state;
     history.push('/game');
-    this.submitPlayBtn();
-    dispatch(addName(name));
-    dispatch(addEmail(email));
+    addNames(name);
+    addEmails(email);
   };
-  
+
   validatingButton = () => {
     const { name, email } = this.state;
     const isDisabled = !(email.length > 0 && name.length > 0);
     this.setState({ isDisabled });
   };
 
+  localStorage = (key, value) => {
+    localStorage.setItem(key, value);
+  };
+
   submitPlayBtn = async () => {
-    const token = await tokenAPI();
-    localStorage.setItem('token', token.token);
+    const url = 'https://opentdb.com/api_token.php?command=request';
+    const request = await fetch(url);
+    const response = await request.json();
+    this.localStorage('token', response.token);
   };
 
   settings = () => {
@@ -82,6 +88,11 @@ class Login extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  addNames: (name) => dispatch(addName(name)),
+  addEmails: (email) => dispatch(addEmail(email)),
+});
+
 Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
@@ -89,4 +100,4 @@ Login.propTypes = {
   dispatch: PropTypes.func,
 }.isRequired;
 
-export default connect()(Login);
+export default connect(null, mapDispatchToProps)(Login);

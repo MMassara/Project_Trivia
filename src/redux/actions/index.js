@@ -13,6 +13,6 @@ export const addEmail = (email) => ({
 });
 
 export const showPoints = (points) => ({
-  type: SHOW_POINTS, 
-  points
-})
+  type: SHOW_POINTS,
+  points,
+});

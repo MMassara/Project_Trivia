@@ -93,7 +93,7 @@ class TriviaQuests extends Component {
   };
 
   render() {
-    const { arrayResults, arrayIndex, answers, invalidToken, showResults,  seconds } = this.state;
+    const { arrayResults, arrayIndex, answers, invalidToken, showResults, seconds, isDisable } = this.state;
 
     return (
       <div>

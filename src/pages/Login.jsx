@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-import { addName } from '../redux/actions/index';
-/* import { userLoginAction } from '../redux/actions'; */
 import tokenAPI from '../services/tokenAPI';
 
 import { addName, addEmail } from '../redux/actions/index';
@@ -25,6 +23,7 @@ class Login extends Component {
     const { history, dispatch } = this.props;
     const { name, email } = this.state;
     history.push('/game');
+    this.submitPlayBtn();
     dispatch(addName(name));
     dispatch(addEmail(email));
   };
@@ -38,10 +37,6 @@ class Login extends Component {
   submitPlayBtn = async () => {
     const token = await tokenAPI();
     localStorage.setItem('token', token.token);
-    const { history, dispatch } = this.props;
-    const { name } = this.state;
-    history.push('/game');
-    dispatch(addName(name));
   };
 
   settings = () => {
@@ -70,7 +65,7 @@ class Login extends Component {
         <button
           type="button"
           data-testid="btn-play"
-          onClick={ this.submitPlayBtn }
+          onClick={ this.sucessLogin }
           disabled={ isDisabled }
         >
           Play

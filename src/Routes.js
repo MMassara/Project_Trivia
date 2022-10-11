@@ -8,8 +8,8 @@ class Routes extends Component {
   render() {
     return (
       <Switch>
-        <Route exact path="/" render={ (props) => <Login { ...props } /> } />
-        <Route exact path="/game" render={ (props) => <Game { ...props } /> } />
+        <Route exact path="/" component={Login} />
+        <Route exact path="/game" component={Game} />
         <Route path="/config" component={ Configuracoes } />
       </Switch>
     );

@@ -15,22 +15,22 @@ class Header extends Component {
   getImageGravatar = async () => {
     const { email } = this.props;
     const userEmail = md5(email).toString();
-    const url = `https://www.gravatar.com/avatar/${userEmail}`;
-    const responseApi = await fetch(url);
+    const urlApi = `https://www.gravatar.com/avatar/${userEmail}`;
+    const responseApi = await fetch(urlApi);
     this.setState({
-      userImage: responseApi,
+      userImage: responseApi.url,
     });
   };
 
   render() {
-    const { name } = this.props;
+    const { name, points } = this.props;
     const { userImage } = this.state;
     return (
-      <div>
+      <header>
         <img data-testid="header-profile-picture" alt="userImage" src={ userImage } />
         <span data-testid="header-player-name">{name}</span>
-        <span data-testid="header-score">0</span>
-      </div>
+        <span data-testid="header-score">{points}</span>
+      </header>
     );
   }
 }
@@ -38,6 +38,7 @@ class Header extends Component {
 const mapStateToProps = (state) => ({
   name: state.login.name,
   email: state.login.email,
+  points: state.login.points
 });
 
 Header.propTypes = {

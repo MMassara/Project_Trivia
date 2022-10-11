@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-// import PropTypes from 'prop-types';
 
 class TriviaQuests extends Component {
   state = {
@@ -112,9 +111,4 @@ class TriviaQuests extends Component {
   }
 }
 
-// TriviaQuests.propTypes = {
-//   history: PropTypes.shape({
-//     push: PropTypes.func.isRequired,
-//   }).isRequired,
-// };
 export default TriviaQuests;

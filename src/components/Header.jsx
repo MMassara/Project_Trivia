@@ -12,25 +12,24 @@ class Header extends Component {
     this.getImageGravatar();
   }
 
-  getImageGravatar = async () => {
+  getImageGravatar = () => {
     const { email } = this.props;
     const userEmail = md5(email).toString();
-    const url = `https://www.gravatar.com/avatar/${userEmail}`;
-    const responseApi = await fetch(url);
+    const urlApi = `https://www.gravatar.com/avatar/${userEmail}`;
     this.setState({
-      userImage: responseApi,
+      userImage: urlApi,
     });
   };
 
   render() {
-    const { name } = this.props;
+    const { name, points } = this.props;
     const { userImage } = this.state;
     return (
-      <div>
+      <header>
         <img data-testid="header-profile-picture" alt="userImage" src={ userImage } />
         <span data-testid="header-player-name">{name}</span>
-        <span data-testid="header-score">0</span>
-      </div>
+        <span data-testid="header-score">{` || score: ${points}`}</span>
+      </header>
     );
   }
 }
@@ -38,11 +37,13 @@ class Header extends Component {
 const mapStateToProps = (state) => ({
   name: state.login.name,
   email: state.login.email,
+  points: state.login.points,
 });
 
 Header.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
+  points: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(Header);

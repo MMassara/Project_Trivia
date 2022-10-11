@@ -1,11 +1,12 @@
-import { ADD_NAME, ADD_EMAIL } from '../actions/index';
+import { ADD_NAME, ADD_EMAIL, SHOW_POINTS } from '../actions/index';
 
 const INITIAL_STATE = {
   name: '',
   email: '',
+  points: 0,
 };
 
-function login(state = INITIAL_STATE, action) {
+const login = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case ADD_NAME:
     return {
@@ -17,9 +18,14 @@ function login(state = INITIAL_STATE, action) {
       ...state,
       email: action.email,
     };
+  case SHOW_POINTS:
+    return {
+      ...state,
+      points: action.points,
+    };
   default:
     return state;
   }
-}
+};
 
 export default login;

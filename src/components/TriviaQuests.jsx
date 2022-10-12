@@ -7,10 +7,8 @@ import { showPoints, showRight } from '../redux/actions';
 const correctAnswer = 'correct-answer';
 const ten = 10;
 const hard = 3;
-
 class TriviaQuests extends Component {
-  state = {
-    arrayResults: [],
+  state = { arrayResults: [],
     arrayIndex: 0,
     answers: [],
     invalidToken: false,
@@ -18,6 +16,7 @@ class TriviaQuests extends Component {
     showResults: false,
     score: 0,
     rightAnswers: 0,
+    showButtonNext: false,
   };
 
   componentDidMount() {
@@ -67,24 +66,31 @@ class TriviaQuests extends Component {
     const { seconds, arrayResults, arrayIndex } = this.state;
     const timer = seconds;
     const dificulty = arrayResults[arrayIndex].difficulty;
-
     if (selectedAnswer === correctAnswer) {
       if (dificulty === 'hard') {
         this.setState((prevState) => ({
-          score: prevState.score + (ten + (timer * hard)),
+          score: prevState.score + (ten + timer * hard),
           rightAnswers: prevState.rightAnswers + 1,
+          showButtonNext: true,
         }));
       } else if (dificulty === 'medium') {
         this.setState((prevState) => ({
-          score: prevState.score + (ten + (timer * 2)),
+          score: prevState.score + (ten + timer * 2),
           rightAnswers: prevState.rightAnswers + 1,
+          showButtonNext: true,
         }));
       } else if (dificulty === 'easy') {
         this.setState((prevState) => ({
-          score: prevState.score + (ten + (timer * 1)),
+          score: prevState.score + (ten + timer * 1),
           rightAnswers: prevState.rightAnswers + 1,
+          showButtonNext: true,
         }));
       }
+    }
+    if (selectedAnswer !== correctAnswer) {
+      this.setState({
+        showButtonNext: true,
+      });
     }
   };
 
@@ -94,6 +100,7 @@ class TriviaQuests extends Component {
         arrayIndex: prevState.arrayIndex + 1,
         showResults: false,
         seconds: 30,
+        showButtonNext: false,
       }),
       () => this.createAnswers(),
     );
@@ -151,16 +158,9 @@ class TriviaQuests extends Component {
   };
 
   render() {
-    const {
-      arrayResults,
-      arrayIndex,
-      answers,
-      invalidToken,
-      showResults,
-      seconds,
-      isDisable,
-    } = this.state;
-
+    const { arrayResults, arrayIndex, answers,
+      invalidToken, showResults, seconds,
+      isDisable, showButtonNext } = this.state;
     return (
       <div>
         {invalidToken && <Redirect to="/" />}
@@ -178,56 +178,62 @@ class TriviaQuests extends Component {
               <div data-testid="answer-options">
                 {answers
                   .map(
-                    (question) => (question.name === arrayResults[arrayIndex]
-                      .correct_answer
-                      ? (
-                        <button
-                          key={ question.name }
-                          type="button"
-                          disabled={ isDisable }
-                          data-testid={ question.testid }
-                          onClick={ this.clickFunctions }
-                          className={
-                            (question.testid === correctAnswer
+                    (question) => (
+                      question.name === arrayResults[arrayIndex].correct_answer
+                        ? (
+                          <button
+                            key={ question.name }
+                            type="button"
+                            disabled={ isDisable }
+                            data-testid={ question.testid }
+                            onClick={ this.clickFunctions }
+                            className={
+                              (question.testid === correctAnswer
                         && showResults === true
-                              ? 'green-border'
-                              : null)
+                                ? 'green-border'
+                                : null)
                         || (question.isRight === false && showResults === true
                           ? 'red-border'
                           : null)
-                          }
-                        >
-                          {question.name}
-                        </button>
-                      ) : (
-                        <button
-                          key={ question.name }
-                          type="button"
-                          disabled={ isDisable }
-                          data-testid={ question.testid }
-                          onClick={ this.clickFunctions }
-                          className={
-                            (question.testid === correctAnswer
+                            }
+                          >
+                            {question.name}
+                          </button>
+                        ) : (
+                          <button
+                            key={ question.name }
+                            type="button"
+                            disabled={ isDisable }
+                            data-testid={ question.testid }
+                            onClick={ this.clickFunctions }
+                            className={
+                              (question.testid === correctAnswer
                         && showResults === true
-                              ? 'green-border'
-                              : null)
+                                ? 'green-border'
+                                : null)
                         || (question.isRight === false && showResults === true
                           ? 'red-border'
                           : null)
-                          }
-                        >
-                          {question.name}
-                        </button>
-                      )),
+                            }
+                          >
+                            {question.name}
+                          </button>
+                        )),
                   )}
               </div>
               <div>
                 <h1>{seconds}</h1>
               </div>
             </div>
-            <button type="button" onClick={ this.handleClick }>
-              Next Question
-            </button>
+            {showButtonNext && (
+              <button
+                type="button"
+                onClick={ this.handleClick }
+                data-testid="btn-next"
+              >
+                Next
+              </button>
+            )}
           </>
         )}
       </div>

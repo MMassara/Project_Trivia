@@ -161,9 +161,11 @@ class TriviaQuests extends Component {
     const { arrayResults, arrayIndex, answers,
       invalidToken, showResults, seconds,
       isDisable, showButtonNext } = this.state;
+      console.log(arrayIndex)
     return (
       <div>
         {invalidToken && <Redirect to="/" />}
+        {arrayIndex > 4 && <Redirect to='/feedback'/>}
         {arrayResults.length > 0 && (
           <>
             <div>

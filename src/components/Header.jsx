@@ -5,10 +5,6 @@ import md5 from 'crypto-js/md5';
 import { setUrlGravatar } from '../redux/actions';
 
 class Header extends Component {
-  state = {
-    userImage: '',
-  };
-
   componentDidMount() {
     this.getImageGravatar();
   }
@@ -18,17 +14,14 @@ class Header extends Component {
     const userEmail = md5(email).toString();
     const urlApi = `https://www.gravatar.com/avatar/${userEmail}`;
     dispatch(setUrlGravatar(urlApi));
-    this.setState({
-      userImage: urlApi,
-    });
   };
 
   render() {
-    const { name, score } = this.props;
-    const { userImage } = this.state;
+    const { name, email, score } = this.props;
+    const userEmail = md5(email).toString();
     return (
       <header>
-        <img data-testid="header-profile-picture" alt="userImage" src={ userImage } />
+        <img data-testid="header-profile-picture" alt="userImage" src={ `https://www.gravatar.com/avatar/${userEmail}` } />
         <span data-testid="header-player-name">{name}</span>
         <span data-testid="header-score">{` || score: ${score}`}</span>
       </header>

@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -7,6 +8,7 @@ import { showPoints, showRight } from '../redux/actions';
 const correctAnswer = 'correct-answer';
 const ten = 10;
 const hard = 3;
+const four = 4;
 class TriviaQuests extends Component {
   state = { arrayResults: [],
     arrayIndex: 0,
@@ -95,6 +97,9 @@ class TriviaQuests extends Component {
   };
 
   handleClick = () => {
+    const { history } = this.props;
+    const { arrayIndex } = this.state;
+    console.log(history);
     this.setState(
       (prevState) => ({
         arrayIndex: prevState.arrayIndex + 1,
@@ -104,6 +109,9 @@ class TriviaQuests extends Component {
       }),
       () => this.createAnswers(),
     );
+    if (arrayIndex === four) {
+      history.push('/feedback');
+    }
   };
 
   fetchApi = async () => {
@@ -158,14 +166,13 @@ class TriviaQuests extends Component {
   };
 
   render() {
-    const { arrayResults, arrayIndex, answers,
-      invalidToken, showResults, seconds,
+    const { arrayResults, arrayIndex, answers, invalidToken, showResults, seconds,
       isDisable, showButtonNext } = this.state;
-      console.log(arrayIndex)
+    console.log(arrayIndex);
     return (
       <div>
         {invalidToken && <Redirect to="/" />}
-        {arrayIndex > 4 && <Redirect to='/feedback'/>}
+        {/* {arrayIndex === five && <Redirect to="/feedback" />} */}
         {arrayResults.length > 0 && (
           <>
             <div>
@@ -242,9 +249,10 @@ class TriviaQuests extends Component {
     );
   }
 }
-
 TriviaQuests.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
-
 export default connect()(TriviaQuests);

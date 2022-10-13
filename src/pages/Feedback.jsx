@@ -14,24 +14,24 @@ class Feedback extends Component {
 
   clickPlayAgain = () => {
     const { history } = this.props;
-    this.makeRank()
+    this.makeRank();
     history.push('/');
   };
 
   clickPlayRanking = () => {
     const { history } = this.props;
-    this.makeRank()
+    this.makeRank();
     history.push('/ranking');
   };
 
   makeRank = () => {
-      const { name, score, gravatarEmail } = this.props;
-      const token = localStorage.getItem('token');
-      const player = { ranking: [{ name, score, picture: gravatarEmail }], token };
-      const allPlayers = JSON.parse(localStorage.getItem('players'))
-      allPlayers.push(player);
-      localStorage.setItem('players', JSON.stringify(allPlayers))
-  }
+    const { name, score, gravatarEmail } = this.props;
+    const token = localStorage.getItem('token');
+    const player = { ranking: [{ name, score, picture: gravatarEmail }], token };
+    const allPlayers = JSON.parse(localStorage.getItem('players'));
+    allPlayers.push(player);
+    localStorage.setItem('players', JSON.stringify(allPlayers));
+  };
 
   render() {
     const { score, assertions } = this.props;
@@ -71,7 +71,7 @@ const mapStateToProps = (state) => ({
   name: state.player.name,
   assertions: state.player.assertions,
   score: state.player.score,
-  gravatarEmail: state.player.gravatarEmail
+  gravatarEmail: state.player.gravatarEmail,
 });
 
 export default connect(mapStateToProps)(Feedback);

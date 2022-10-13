@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 export default class Ranking extends Component {
   state = {
-    players:[]
-  }
+    players: [],
+  };
 
   componentDidMount() {
-    this.showRanking()
+    this.showRanking();
   }
 
   clickGoHome = () => {
@@ -17,23 +17,25 @@ export default class Ranking extends Component {
 
   showRanking = () => {
     const allPlayers = JSON.parse(localStorage.getItem('players'));
-    const allPlayersSorted = allPlayers.sort(function(a, b) {return b.ranking[0].score - a.ranking[0].score})
+    const allPlayersSorted = allPlayers
+      .sort((a, b) => b.ranking[0].score - a.ranking[0].score);
     this.setState({
-      players: allPlayersSorted
-    })
-  }
+      players: allPlayersSorted,
+    });
+  };
 
   render() {
-    const {players} = this.state;
+    const { players } = this.state;
     return (
       <div>
         Ranking
         <title type="text" data-testid="ranking-title">ranking</title>
-        {players.length > 0 ? players.map((player, index) => <div key={index}>
-        <img src={player.ranking[0].picture}/> 
-        <div data-testid={`player-name-${index}`}>{player.ranking[0].name}</div> 
-        <div data-testid={`player-score-${index}`}>{player.ranking[0].score}</div>
-        </div>) : null}
+        {players.length > 0 ? players.map((player, index) => (
+          <div key={ index }>
+            <img src={ player.ranking[0].picture } alt={ `player ${index}` } />
+            <div data-testid={ `player-name-${index}` }>{player.ranking[0].name}</div>
+            <div data-testid={ `player-score-${index}` }>{player.ranking[0].score}</div>
+          </div>)) : null}
         <button
           type="button"
           data-testid="btn-go-home"

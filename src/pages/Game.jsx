@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import TriviaQuests from '../components/TriviaQuests';
-import PropTypes from 'prop-types';
 
 export default class Game extends Component {
   render() {
@@ -9,7 +9,7 @@ export default class Game extends Component {
     return (
       <>
         <Header />
-        <TriviaQuests history={history}/>
+        <TriviaQuests history={ history } />
       </>
     );
   }

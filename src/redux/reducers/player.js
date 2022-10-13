@@ -1,7 +1,9 @@
-import { ADD_NAME, SHOW_POINTS, SET_URL_GRAVATAR, SHOW_RIGHT } from '../actions/index';
+import { ADD_NAME, ADD_EMAIL, SHOW_POINTS, SET_URL_GRAVATAR,
+  SHOW_RIGHT } from '../actions/index';
 
 const INITIAL_STATE = {
   name: '',
+  email: '',
   assertions: 0,
   score: 0,
   gravatarEmail: '',
@@ -13,6 +15,11 @@ function player(state = INITIAL_STATE, action) {
     return {
       ...state,
       name: action.name,
+    };
+  case ADD_EMAIL:
+    return {
+      ...state,
+      email: action.email,
     };
   case SHOW_POINTS:
     return {

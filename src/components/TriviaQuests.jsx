@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+/* eslint-disable max-lines */
+import React, { Component } from 'react'; import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux'; import PropTypes from 'prop-types';
 import { showPoints, showRight } from '../redux/actions';
 
 const correctAnswer = 'correct-answer';
-const ten = 10;
-const hard = 3;
+const ten = 10; const hard = 3; const four = 4;
+
 class TriviaQuests extends Component {
   state = { arrayResults: [],
     arrayIndex: 0,
@@ -20,15 +19,12 @@ class TriviaQuests extends Component {
   };
 
   componentDidMount() {
-    this.fetchApi();
-    this.handleTime();
+    this.fetchApi(); this.handleTime();
   }
 
   componentDidUpdate() {
-    const { dispatch } = this.props;
-    const { score, rightAnswers } = this.state;
-    dispatch(showPoints(score));
-    dispatch(showRight(rightAnswers));
+    const { dispatch } = this.props; const { score, rightAnswers } = this.state;
+    dispatch(showPoints(score)); dispatch(showRight(rightAnswers));
   }
 
   showResponses = () => {
@@ -39,8 +35,7 @@ class TriviaQuests extends Component {
 
   handleTime = () => {
     this.setState({ seconds: 30 }, () => {
-      const NUMBER = 1000;
-      const interval = setInterval(() => {
+      const NUMBER = 1000; const interval = setInterval(() => {
         this.setState(
           (prevState) => ({
             isDisable: false,
@@ -61,11 +56,9 @@ class TriviaQuests extends Component {
   };
 
   sumPoints = (event) => {
-    const { target } = event;
-    const selectedAnswer = target.dataset.testid;
+    const { target } = event; const selectedAnswer = target.dataset.testid;
     const { seconds, arrayResults, arrayIndex } = this.state;
-    const timer = seconds;
-    const dificulty = arrayResults[arrayIndex].difficulty;
+    const timer = seconds; const dificulty = arrayResults[arrayIndex].difficulty;
     if (selectedAnswer === correctAnswer) {
       if (dificulty === 'hard') {
         this.setState((prevState) => ({
@@ -95,6 +88,7 @@ class TriviaQuests extends Component {
   };
 
   handleClick = () => {
+    const { arrayIndex } = this.state; const { history } = this.props;
     this.setState(
       (prevState) => ({
         arrayIndex: prevState.arrayIndex + 1,
@@ -104,6 +98,9 @@ class TriviaQuests extends Component {
       }),
       () => this.createAnswers(),
     );
+    if (arrayIndex === four) {
+      history.push('/feedback');
+    }
   };
 
   fetchApi = async () => {
@@ -111,8 +108,7 @@ class TriviaQuests extends Component {
     const request = await fetch(
       `https://opentdb.com/api.php?amount=5&token=${token}`,
     );
-    const response = await request.json();
-    const magicNumber = 3;
+    const response = await request.json(); const magicNumber = 3;
     if (!response.results.length && response.response_code === magicNumber) {
       localStorage.setItem('token', '');
       this.setState({
@@ -141,11 +137,9 @@ class TriviaQuests extends Component {
       },
     );
     const correct = {
-      name: arrayResults[arrayIndex].correct_answer,
-      testid: correctAnswer,
+      name: arrayResults[arrayIndex].correct_answer, testid: correctAnswer,
     };
-    const answerss = [...results, correct];
-    const MULTIPLE = 0.5;
+    const answerss = [...results, correct]; const MULTIPLE = 0.5;
     const shuffle = answerss.sort(() => Math.random() - MULTIPLE);
     this.setState({
       answers: shuffle,
@@ -158,9 +152,9 @@ class TriviaQuests extends Component {
   };
 
   render() {
-    const { arrayResults, arrayIndex, answers,
-      invalidToken, showResults, seconds,
+    const { arrayResults, arrayIndex, answers, invalidToken, showResults, seconds,
       isDisable, showButtonNext } = this.state;
+
     return (
       <div>
         {invalidToken && <Redirect to="/" />}
@@ -209,11 +203,9 @@ class TriviaQuests extends Component {
                             className={
                               (question.testid === correctAnswer
                         && showResults === true
-                                ? 'green-border'
-                                : null)
+                                ? 'green-border' : null)
                         || (question.isRight === false && showResults === true
-                          ? 'red-border'
-                          : null)
+                          ? 'red-border' : null)
                             }
                           >
                             {question.name}
@@ -241,8 +233,17 @@ class TriviaQuests extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  name: state.player.name,
+  score: state.player.score,
+  gravatarEmail: state.player.gravatarEmail,
+});
+
 TriviaQuests.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
-export default connect()(TriviaQuests);
+export default connect(mapStateToProps)(TriviaQuests);

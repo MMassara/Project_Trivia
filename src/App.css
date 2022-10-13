@@ -1,4 +1,5 @@
 body {
+  background-color: #2b2b2b;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -28,16 +29,9 @@ body {
   }
 }
 
-/* .App-header {
-  align-items: center;
-  background-color: #282c34;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  font-size: calc(10px + 2vmin);
-  justify-content: center;
-  min-height: 100vh;
-} */
+.timer {
+  color: #dfb127;
+}
 
 .App-link {
   color: #61dafb;
@@ -60,4 +54,172 @@ body {
   40%, 60% {
     transform: translate3d(4px, 0, 0);
   }
+}
+
+.formulario {
+  background-color: #0b0a0a;
+  border: 3px solid #dfb127;
+  border-radius: 4px;
+  box-sizing: border-box;
+  height: auto;
+  margin: auto;
+  margin-bottom: 100px;
+  margin-top: 50px;
+  padding: 15px;
+  width: 320px;
+}
+
+.showRanking {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: auto;
+  width: 1000px;
+}
+
+.allItems {
+  background-color: #0b0a0a;
+  border: 3px solid #dfb127;
+  border-radius: 4px;
+  box-sizing: border-box;
+  height: 500px;
+  margin: auto;
+  margin-bottom: 100px;
+  margin-top: 50px;
+  padding: 15px;
+  width: 1000px;
+}
+
+.buttonsGrid button {
+  background-color: #dfb127;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #0b0a0a;
+  cursor: pointer;
+  font-size: 1.2em;
+  height: 50px;
+  margin-top: 20px;
+  outline: 0;
+  text-align: center;
+  transition: 0.4s;
+  width: 100%;
+}
+
+.gamePage {
+  border-bottom: 1px #202020 solid;
+  color: #dfb127;
+  font-size: 1.5em;
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+}
+
+.buttonsGrid {
+  display: flex;
+  justify-content: space-around;
+}
+
+.title {
+  border-bottom: 1px #202020 solid;
+  color: #dfb127;
+  font-size: 2em;
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+}
+
+.input-container {
+  height: 50px;
+  margin-top: 20px;
+  position: relative;
+  width: 100%;
+}
+
+.input {
+  background-color: #131313;
+  border: 0;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #eee;
+  font-size: 18px;
+  height: 100%;
+  outline: 0;
+  padding: 4px 20px 0;
+  width: 100%;
+}
+
+.legenda-p {
+  background-color: transparent;
+  border-radius: 8px;
+  height: 20px;
+  left: 20px;
+  position: absolute;
+  top: -20px;
+  transform: translateY(0);
+  transition: transform 200ms;
+  width: 100px;
+}
+
+.input:focus ~ .legenda-p, .input:not( :placeholder-shown ) ~ .legenda-p {
+  background-color: #dfb127;
+  transform: translateY(8px);
+}
+
+.label {
+  color: #393940;
+  left: 15px;
+  line-height: 14px;
+  pointer-events: none;
+  position: absolute;
+  top: 20px;
+  transform-origin: 0 50%;
+  transition: transform 200ms , color 200ms;
+}
+
+.input:focus ~ .label, .input:not( :placeholder-shown ) ~ .label {
+  transform: translateY(-30px) translateX(10px) scale(0.75);
+}
+
+.input:not( :placeholder-shown ) ~ .label {
+  color: #808097;
+}
+
+.input:focus ~ .label {
+  color: #131313;
+}
+
+.btn {
+  background-color: #dfb127;
+  border: 0;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #0b0a0a;
+  cursor: pointer;
+  font-size: 1.2em;
+  height: 50px;
+  margin-top: 20px;
+  outline: 0;
+  text-align: center;
+  transition: 0.4s;
+  width: 100%;
+}
+
+.goHomeButton {
+  background-color: #dfb127;
+  border: 0;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #0b0a0a;
+  cursor: pointer;
+  font-size: 1.2em;
+  height: 50px;
+  margin-top: 20px;
+  outline: 0;
+  text-align: center;
+  transition: 0.4s;
+  width: 200px;
+}
+
+.btn:hover {
+  background-color: #b78900;
+  color: #eae3e3;
 }

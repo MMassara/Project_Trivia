@@ -38,25 +38,50 @@ class Feedback extends Component {
     return (
       <div>
         <Header />
-        <main>
-          <div data-testid="feedback-text">{this.messageFeedback()}</div>
-          <div data-testid="feedback-total-score">{ score }</div>
-          <div data-testid="feedback-total-question">{ assertions }</div>
+        <main className="formulario">
+          <div
+            data-testid="feedback-text"
+            className="title"
+          >
+            {this.messageFeedback()}
+          </div>
+          <label className="title" htmlFor="score">
+            Pontuação
+            <div
+              data-testid="feedback-total-score"
+              className="title"
+              id="score"
+            >
+              { score }
+            </div>
+          </label>
+          <label className="title" htmlFor="assertions">
+            Acertos
+            <div
+              data-testid="feedback-total-question"
+              className="title"
+              id="assertions"
+            >
+              { assertions }
+            </div>
+          </label>
+          <button
+            type="button"
+            data-testid="btn-play-again"
+            onClick={ this.clickPlayAgain }
+            className="btn"
+          >
+            Play Again
+          </button>
+          <button
+            type="button"
+            data-testid="btn-ranking"
+            onClick={ this.clickPlayRanking }
+            className="btn"
+          >
+            Ranking
+          </button>
         </main>
-        <button
-          type="button"
-          data-testid="btn-play-again"
-          onClick={ this.clickPlayAgain }
-        >
-          Play Again
-        </button>
-        <button
-          type="button"
-          data-testid="btn-ranking"
-          onClick={ this.clickPlayRanking }
-        >
-          Ranking
-        </button>
       </div>
     );
   }

@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 import React, { Component } from 'react'; import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux'; import PropTypes from 'prop-types';
 import { showPoints, showRight } from '../redux/actions';
@@ -156,11 +155,11 @@ class TriviaQuests extends Component {
       isDisable, showButtonNext } = this.state;
 
     return (
-      <div>
+      <div className="allItems">
         {invalidToken && <Redirect to="/" />}
         {arrayResults.length > 0 && (
           <>
-            <div>
+            <div className="gamePage">
               <h4 data-testid="question-category">
                 {arrayResults[arrayIndex].category}
               </h4>
@@ -168,8 +167,8 @@ class TriviaQuests extends Component {
                 {arrayResults[arrayIndex].question}
               </h4>
             </div>
-            <div>
-              <div data-testid="answer-options">
+            <div className="buttonsAnsewrs">
+              <div data-testid="answer-options" className="buttonsGrid">
                 {answers
                   .map(
                     (question) => (
@@ -214,7 +213,7 @@ class TriviaQuests extends Component {
                   )}
               </div>
               <div>
-                <h1>{seconds}</h1>
+                <h1 className="timer">{seconds}</h1>
               </div>
             </div>
             {showButtonNext && (
@@ -222,6 +221,7 @@ class TriviaQuests extends Component {
                 type="button"
                 onClick={ this.handleClick }
                 data-testid="btn-next"
+                className="btn"
               >
                 Next
               </button>

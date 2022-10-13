@@ -23,7 +23,7 @@ class Header extends Component {
       <header>
         <img data-testid="header-profile-picture" alt="userImage" src={ `https://www.gravatar.com/avatar/${userEmail}` } />
         <span data-testid="header-player-name">{name}</span>
-        <span data-testid="header-score">{` || score: ${score}`}</span>
+        <span data-testid="header-score">{score}</span>
       </header>
     );
   }

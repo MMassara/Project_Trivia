@@ -9,7 +9,7 @@ const correctAnswer = 'correct-answer';
 const ten = 10;
 const hard = 3;
 const four = 4;
-const five = 5;
+
 class TriviaQuests extends Component {
   state = { arrayResults: [],
     arrayIndex: 0,
@@ -98,8 +98,7 @@ class TriviaQuests extends Component {
   };
 
   handleClick = () => {
-    const { history } = this.props;
-    const { arrayIndex } = this.state;
+    const{arrayIndex} = this.state; const {history} = this.props;
     this.setState(
       (prevState) => ({
         arrayIndex: prevState.arrayIndex + 1,
@@ -109,13 +108,9 @@ class TriviaQuests extends Component {
       }),
       () => this.createAnswers(),
     );
-    // if (arrayIndex === four) {
-    //   const { name, score, gravatarEmail } = this.props;
-    //   const token = localStorage.getItem('token');
-    //   const players = { ranking: [{ name, score, picture: gravatarEmail }], token };
-    //   localStorage.setItem('players', JSON.stringify(players));
-    //   history.push('/feedback');
-    // }
+    if(arrayIndex === four) {
+      history.push('/feedback')
+    }
   };
 
   fetchApi = async () => {
@@ -176,7 +171,6 @@ class TriviaQuests extends Component {
     return (
       <div>
         {invalidToken && <Redirect to="/" />}
-        {arrayIndex === four && <Redirect to="/feedback" />}
         {arrayResults.length > 0 && (
           <>
             <div>

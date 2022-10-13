@@ -36,6 +36,9 @@ class Login extends Component {
 
   localStorage = (key, value) => {
     localStorage.setItem(key, value);
+    if (localStorage.getItem('players') === null) {
+      localStorage.setItem('players', JSON.stringify([]));
+    }
   };
 
   submitPlayBtn = async () => {

@@ -6,6 +6,7 @@ import Game from './pages/Game';
 import Login from './pages/Login';
 import Configuracoes from './pages/Configuracoes';
 import Feedback from './pages/Feedback';
+import Ranking from './pages/Ranking';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route exact path="/game" component={ Game } />
         <Route exact path="/config" component={ Configuracoes } />
         <Route exact path="/feedback" component={ Feedback } />
+        <Route exact path="/ranking" component={ Ranking } />
       </Switch>
     </div>
   );

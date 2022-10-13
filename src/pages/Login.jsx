@@ -56,24 +56,36 @@ class Login extends Component {
   render() {
     const { name, email, isDisabled } = this.state;
     return (
-      <div>
-        <input
-          type="text"
-          name="name"
-          data-testid="input-player-name"
-          onChange={ this.handleChange }
-          value={ name }
-        />
-        <input
-          type="email"
-          name="email"
-          data-testid="input-gravatar-email"
-          onChange={ this.handleChange }
-          value={ email }
-        />
+      <div className="formulario">
+        <div className="input-container">
+          <input
+            id="name"
+            type="text"
+            name="name"
+            className="input"
+            placeholder="Nome"
+            data-testid="input-player-name"
+            onChange={ this.handleChange }
+            value={ name }
+          />
+          <div className="legenda-p" />
+        </div>
+        <div className="input-container">
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            className="input"
+            data-testid="input-gravatar-email"
+            onChange={ this.handleChange }
+            value={ email }
+          />
+          <div className="legenda-p" />
+        </div>
         <button
           type="button"
           data-testid="btn-play"
+          className="btn"
           onClick={ this.sucessLogin }
           disabled={ isDisabled }
         >
@@ -81,6 +93,7 @@ class Login extends Component {
         </button>
         <button
           type="button"
+          className="btn"
           data-testid="btn-settings"
           onClick={ this.settings }
         >
@@ -90,17 +103,14 @@ class Login extends Component {
     );
   }
 }
-
 const mapDispatchToProps = (dispatch) => ({
   addNames: (name) => dispatch(addName(name)),
   addEmails: (email) => dispatch(addEmail(email)),
 });
-
 Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }),
   dispatch: PropTypes.func,
 }.isRequired;
-
 export default connect(null, mapDispatchToProps)(Login);

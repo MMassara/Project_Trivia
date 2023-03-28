@@ -4,4 +4,4 @@ Ao iníciar o jogo, deverá ser selecionado uma das respostas disponíveis para 
 
  Para rodar o projeto em sua máquina, digite no terminal do diretório do projeto o comando npm install. Após instalar as dependências, digite no terminal npm start.
 
-Estou aberto à quaisquer dicas e feedbacks!
+Estou aberto a quaisquer dicas e feedbacks!
